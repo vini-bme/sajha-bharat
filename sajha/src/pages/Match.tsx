@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronUp, Clock3, Edit3, Info, LoaderCircle, MapPin, Network, PackageCheck, RefreshCw, ShieldCheck, Sparkles, UsersRound, X } from 'lucide-react';
 import { Link } from 'wouter';
-import { useCreateMatchingPlan, useListProducerClusters } from '@workspace/api-client-react';
-import type { MatchingResult, ParsedRequirement } from '@workspace/api-client-react';
+import {
+  useCreateMatchingPlan,
+  useListProducerClusters,
+  type MatchingResult,
+  type ParsedRequirement,
+} from '@/lib/sajha-api';
 import { parseRequirement as parseRequirementText } from '@/lib/parseRequirement';
 import { sampleRequirement } from './Home';
 
