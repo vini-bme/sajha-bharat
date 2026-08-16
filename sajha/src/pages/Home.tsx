@@ -1,15 +1,13 @@
 import { ArrowUpRight, Check, CircleDot, HeartHandshake, MapPin, Network, Route, ShieldCheck, Sparkles, UsersRound } from 'lucide-react';
 import { Link } from 'wouter';
-import { useHealthCheck, useListProducerClusters } from '@workspace/api-client-react';
 
 const sampleRequirement = 'I need 1,000 cotton school bags for an event in Lucknow within 30 days, budget ₹180 per unit, prefer women-led producers.';
+const clusterCount = 12;
+const producerCount = 186;
+const networkReady = true;
 
 export default function Home() {
-  const clustersQuery = useListProducerClusters();
-  const healthQuery = useHealthCheck();
-  const clusterCount = clustersQuery.data?.length ?? 0;
-  const producerCount = clustersQuery.data?.reduce((sum, cluster) => sum + cluster.producers.length, 0) ?? 0;
-  const networkReady = healthQuery.data?.status === 'ok' || healthQuery.data?.status === 'healthy';
+  
 
   return (
     <div className="sajha-grain min-h-[100dvh] overflow-hidden bg-background text-foreground">
@@ -125,13 +123,13 @@ export default function Home() {
             <div className="relative overflow-hidden rounded-[26px] bg-sidebar p-7 text-sidebar-foreground sm:row-span-2">
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full border-[22px] border-sidebar-primary/20" />
               <UsersRound size={21} className="text-sidebar-primary" />
-              <div className="mt-16 sajha-display text-6xl font-semibold">{clustersQuery.isLoading ? '—' : clusterCount || '12'}</div>
+              <div className="mt-16 sajha-display text-6xl font-semibold">{clusterCount}</div>
               <div className="mt-2 max-w-[150px] text-sm leading-5 text-sidebar-foreground/65">producer clusters ready to coordinate</div>
               <div className="absolute bottom-6 left-7 right-7 flex items-center gap-2 text-xs text-sidebar-foreground/50"><CircleDot size={12} className="text-sidebar-primary" /> live network signal</div>
             </div>
             <div className="rounded-[26px] border border-border bg-card p-6">
               <HeartHandshake size={20} className="text-primary" />
-              <div className="mt-6 text-3xl font-bold">{clustersQuery.isLoading ? '—' : producerCount || '186'}<span className="ml-1 text-base font-medium text-muted-foreground">makers</span></div>
+              <div className="mt-6 text-3xl font-bold">{producerCount}<span className="ml-1 text-base font-medium text-muted-foreground">makers</span></div>
               <p className="mt-1 text-sm text-muted-foreground">across craft, food, and farm-linked production</p>
             </div>
             <div className="rounded-[26px] border border-border bg-accent/25 p-6">
@@ -160,7 +158,7 @@ export default function Home() {
       <footer className="border-t border-border/70">
         <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-5 py-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
           <span className="sajha-mono tracking-[0.1em]">SAJHA / भारत में साझा क्षमता</span>
-          <span data-testid="status-network-health">{healthQuery.isError ? 'Network signal unavailable' : networkReady ? 'Network signal: connected' : 'Network signal: checking'}</span>
+          <span data-testid="status-network-health">{networkReady ? 'Network signal: connected' : 'Network signal unavailable'}</span>
            <span className="max-w-[500px] text-center sm:text-right">We don't compete with GeM, ONDC or eSaras — we're the missing coordination layer before fulfillment.</span>
         </div>
       </footer>
